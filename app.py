@@ -13,7 +13,19 @@ def validate_email(email):
 def home():
     return render_template('index.html')
 
-@app.route('/add', methods=['POST'])
+@app.route('/add', methods=['GET', 'POST'])
+def add_student():
+    if request.method == 'POST':
+        roll = request.form['roll']
+        name = request.form['name']
+        email = request.form['email']
+
+        with open("students.txt", "a") as file:
+            file.write(f"{roll},{name},{email}\n")
+
+        return "Student Record Saved Successfully!"
+
+    return "Use the form to submit data."
 def add_student():
     try:
         roll = request.form['roll']
